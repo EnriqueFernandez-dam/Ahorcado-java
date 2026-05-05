@@ -47,7 +47,7 @@ public class AhorcadoJuego
     {
         cargarFichero(fichero);
         Random rd = new Random();
-	int radNum = rd.nextInt(MAPA_PALABRAS.size() + 1);
+	int radNum = rd.nextInt(MAPA_PALABRAS.size());
 	palabraSorteada = MAPA_PALABRAS.get(radNum);
 	letrasElegidas = new TreeSet<>();
     }
@@ -72,11 +72,11 @@ public class AhorcadoJuego
         catch (IOException ex) 
         {
             // PALABRAS DUMMY
-            MAPA_PALABRAS.put(1,"VEHICULO");
-            MAPA_PALABRAS.put(2,"MANZANA");
-            MAPA_PALABRAS.put(3,"EUROPA");
-            MAPA_PALABRAS.put(4,"VACACIONES");
-            MAPA_PALABRAS.put(5,"VERANO");
+            MAPA_PALABRAS.put(0,"VEHICULO");
+            MAPA_PALABRAS.put(1,"MANZANA");
+            MAPA_PALABRAS.put(2,"EUROPA");
+            MAPA_PALABRAS.put(3,"VACACIONES");
+            MAPA_PALABRAS.put(4,"VERANO");
         } 
     }
 
@@ -112,7 +112,8 @@ public class AhorcadoJuego
 
     public void reset()
     {
-	    Random rd = new Random();
-	    
+	Random rd = new Random();
+	int radNum = rd.nextInt(MAPA_PALABRAS.size());
+	palabraSorteada = MAPA_PALABRAS.get(radNum);
     }
 }
