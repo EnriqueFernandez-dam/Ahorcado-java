@@ -112,6 +112,7 @@ public class AhorcadoJuego
 
     public void reset()
     {
+	fallos = 0;
 	Random rd = new Random();
 	int radNum = rd.nextInt(MAPA_PALABRAS.size());
 	palabraSorteada = MAPA_PALABRAS.get(radNum);
