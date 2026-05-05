@@ -1,13 +1,14 @@
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -24,22 +25,31 @@ public class AhorcadoJuego
     private String palabraSorteada;
     private Set<String> letrasElegidas;
     
-    private static int fallos;
+    private int fallos = 0;
     private static final String FICHERO = "palabras.txt";
     private static Map<Integer,String> MAPA_PALABRAS = null;
-    private static final int FALLOS_MAX = 0;
+    private static final int FALLOS_MAX = 6;
     
     
     // Constructor
     
     public AhorcadoJuego()
     {
-        cargarFichero();
+        /* cargarFichero();
         Random rd = new Random();
+	int radNum = rd.nextInt(MAPA_PALABRAS.size() + 1);
+	palabraSorteada = MAPA_PALABRAS.get(radNum);
+	letrasElegidas = new TreeSet<>();
+	*/
+	this(FICHERO);
     }
     public AhorcadoJuego(String fichero)
     {
         cargarFichero(fichero);
+        Random rd = new Random();
+	int radNum = rd.nextInt(MAPA_PALABRAS.size() + 1);
+	palabraSorteada = MAPA_PALABRAS.get(radNum);
+	letrasElegidas = new TreeSet<>();
     }
     
     // Métodos
@@ -48,11 +58,9 @@ public class AhorcadoJuego
     {
         MAPA_PALABRAS = new HashMap<>();
         int contador = 1;
-        BufferedReader lector = null;
-        try 
-        {
             File file = new File(fichero);
-            lector = new BufferedReader(new FileReader(file));
+        try (BufferedReader lector = new BufferedReader(new FileReader(file)))
+        {
             String linea = lector.readLine();
             while (linea != null)
             {
@@ -70,22 +78,41 @@ public class AhorcadoJuego
             MAPA_PALABRAS.put(4,"VACACIONES");
             MAPA_PALABRAS.put(5,"VERANO");
         } 
-        finally 
-        {
-            try 
-            {
-                lector.close();
-            } 
-            catch (IOException ex) 
-            {
-                //System.getLogger(AhorcadoJuego.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        }
-        
     }
+
     public void cargarFichero()
     {
         cargarFichero(FICHERO);
     }
     
+    public ArrayList<Integer> buscar(char letra)
+    {
+	if (letra >= 'a' && letra <= 'z') letra -= 40;
+	ArrayList<Integer> posiciones = new ArrayList<>();
+	for (int i = 0; i < palabraSorteada.length(); i++)
+	{
+		if (palabraSorteada.charAt(i) == letra) posiciones.add(i);
+	}
+	return posiciones;
+    }
+
+    public boolean resolver(String propuesta)
+    {
+	    if (!propuesta.equalsIgnoreCase(palabraSorteada))
+	    {
+		    fallos = FALLOS_MAX;
+		    return false;
+		    // comentario
+	    }  
+	    else
+	    {
+		    return true;
+	    }
+    }
+
+    public void reset()
+    {
+	    Random rd = new Random();
+	    
+    }
 }
