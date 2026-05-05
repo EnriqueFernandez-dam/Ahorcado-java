@@ -87,11 +87,32 @@ public class AhorcadoJuego
     
     public ArrayList<Integer> buscar(char letra)
     {
+	if (letra >= 'a' && letra <= 'z') letra -= 40;
 	ArrayList<Integer> posiciones = new ArrayList<>();
 	for (int i = 0; i < palabraSorteada.length(); i++)
 	{
 		if (palabraSorteada.charAt(i) == letra) posiciones.add(i);
 	}
 	return posiciones;
+    }
+
+    public boolean resolver(String propuesta)
+    {
+	    if (!propuesta.equalsIgnoreCase(palabraSorteada))
+	    {
+		    fallos = FALLOS_MAX;
+		    return false;
+		    // comentario
+	    }  
+	    else
+	    {
+		    return true;
+	    }
+    }
+
+    public void reset()
+    {
+	    Random rd = new Random();
+	    
     }
 }
